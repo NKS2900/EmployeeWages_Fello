@@ -1,32 +1,41 @@
 package bridge.lab;
 
 import java.util.Random;
+import java.util.Scanner;
 
 public class EmpChek {
 
 	public static void main(String x[]) {
 		System.out.println("******Employee_Daily_Wages*******");
 
-		DailyWages();
+		PartTime();
 	}
 
-	// UC2_Employee_Daily_Wages
-	static void DailyWages() {
-		int Is_Full_Time = 1;
-		int EmpRate_Hour = 20;
-		int EmpHrs = 8;
-		int Salary = 0;
-
+	static void PartTime() {
+		Scanner in = new Scanner(System.in);
+		int isFullTime = 1;
+		int isPartTime = 0;
+		int perHour = 20;
+		int FullDayHour = 8;
 		Random rn = new Random();
-		int rand = rn.nextInt(2);
-		if (rand == Is_Full_Time) {
+		int rand = rn.nextInt(3);
 
-			Salary = (EmpHrs * EmpRate_Hour);
-			System.out.println("Employee Is Present and Salary is: " + Salary);
+		if (rand == isPartTime) {
+			System.out.println("-------PartTime_Employee_Wages-------");
+			System.out.println("Enter no Days Employee Worked : ");
+			int day = in.nextInt();
+			int partTimeWages = (day * (FullDayHour / 2)) * perHour;
+			System.out.println("PartTime_Wages_for " + day + " days : " + partTimeWages + " Rs.");
 
-		} else {
-			System.out.println("Employee Is Not Present..!!!");
+		} else if (rand == isFullTime) {
+			System.out.println("-------FullTime_Employee_Wages-------");
+			System.out.println("Enter no Days Employee Worked : ");
+			int day = in.nextInt();
+			int FullTimeWages = perHour * (FullDayHour * day);
+			System.out.println("FullTime_Wages_for " + day + " days : " + FullTimeWages + " Rs.");
+		} else
+			System.out.println("Employee Absent..!!!!");
 
-		}
+		in.close();
 	}
 }
