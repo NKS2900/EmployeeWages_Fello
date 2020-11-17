@@ -4,57 +4,56 @@ import java.util.Random;
 
 public class EmpChek {
 
-		public static final int FullDayHour = 8;
-		public static final int WorkingDayMonth = 20;
-		public static final int maxHoursInMonth = 100;
-		public static final int perHour = 20;
+		public static final int IS_PART_TIME =1;
+		public static final int IS_FULL_TIME= 2;
+		private final String company;
+		private final int empRateHours;
+		private final int numofWorkDays;
+		private final int maxHoursperMonth;
 		
-		public static void main(String[] args) {
-					
-				computeEmpWage();
+		public EmpForDiffComp(String company, int empRateHours, int numofWorkDays,int maxHoursperMonth)
+		{
+			this.company=company;
+			this.empRateHours=empRateHours;
+			this.maxHoursperMonth=maxHoursperMonth;
+			this.numofWorkDays=numofWorkDays;
 		}
-	
-		public static void computeEmpWage() {
-			
-			int fullTimeDays = 0,partTimeDays = 0,totalempHour = 0,totalWorkingDay = 0,absent = 0;
-			 				
-			while (maxHoursInMonth > totalempHour && WorkingDayMonth > totalWorkingDay) {
 
-				totalWorkingDay++;
-				
-				Random rn = new Random();
-				int rand = rn.nextInt(3);
+		public int CalEmpWages()
+		{
+			int empHrs=0,totalEmpHours=0,totalWorkDays=0;
 
-				switch (rand) {
-
-				case 0:
-					fullTimeDays++;
-					totalempHour = totalempHour + FullDayHour;
-					break;
-				case 1:
-					partTimeDays++;
-					totalempHour = totalempHour + (FullDayHour / 2);
-					break;
-				default:
-					absent++;
-					break;
-
+			while(totalEmpHours<=maxHoursperMonth && totalWorkDays< numofWorkDays )
+			{
+				totalWorkDays++;
+				int empCheck=(int)(Math.random()*10%3);
+				switch(empCheck)
+				{
+					case IS_PART_TIME:
+							empHrs=4;
+							break;
+					case IS_FULL_TIME:
+							empHrs=8;
+							break;
+					default:
+							empHrs=0;
 				}
+				totalEmpHours+=empHrs;				
 			}
-			int FullTimeSalary = perHour * (FullDayHour * fullTimeDays);
-			int PartTimeSalary = (partTimeDays * (FullDayHour / 2)) * perHour;
-
-			System.out.println("------------Employee_Wages-------------");
-			System.out.println("---------------------------------------");
-			System.out.println("FullTime_Days_in_month: " + fullTimeDays);		
-			System.out.println("PartTime_Days_in_month: " + partTimeDays);		
-			System.out.println("Absent_Days_in_month: " + absent);
-			System.out.println("Total_working_Days_IN_month : " + (fullTimeDays + partTimeDays));
-			System.out.println("Total_Hours    :===> " + totalempHour);
-			System.out.println("FullTime_Salary:===> " + FullTimeSalary);
-			System.out.println("PartTime_Salary:===> " + PartTimeSalary);
-			System.out.println("Total_Salary   :===> " + (FullTimeSalary + PartTimeSalary));
-			System.out.println("---------------------------------------");
-			
+			System.out.println("Total Employee work Hours: "+totalEmpHours);
+			return totalEmpHours*empRateHours;
 		}
+
+		public static void main(String[] args)
+		{
+		
+			EmpForDiffComp Wipro = new EmpForDiffComp("wipro",20,20,100);
+			EmpForDiffComp Infosys = new EmpForDiffComp("infosys",30,20,100);
+			
+			System.out.println("============Emloyee_Wages_in_Wipro==============");
+			System.out.println("Total Employee Wage for "+Wipro.company+": "+Wipro.CalEmpWages());
+			System.out.println("============Emloyee_Wages_in_Infosys==============");
+			System.out.println("Total Employee Wage for "+Infosys.company+": "+Infosys.CalEmpWages());
+		}
+		
 	}
